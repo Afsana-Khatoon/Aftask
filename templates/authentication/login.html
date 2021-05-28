@@ -1,0 +1,40 @@
+{% extends 'authentication/base.html' %}
+    
+  {% block content %}
+    <section class="fdb-block" >
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8 col-lg-7 col-xl-5 text-center">
+            <div class="fdb-box">
+              <div class="row">
+                <div class="col">
+                  <h1>Log In</h1>
+                </div>
+              </div>
+                 {% if messages %}
+                    {% for message in messages %}
+                        <h3>{{ message }}</h3>
+                    {% endfor %}
+                  {% endif %}
+             <form method="POST" action="">
+                    {% csrf_token %}
+              {% load crispy_forms_tags %}
+                 {{ form|crispy }}
+              <div class="row mt-4">
+                <div class="col">
+                  <p class="text-right"><a href="{% url 'signup' %}">Need an account?</a></p>
+                </div>
+              </div>
+              <div class="row mt-4">
+                <div class="col">
+                  <button class="btn btn-outline-primary" type="submit">Log in</button>
+                </div>
+              </div>
+             </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    {% endblock %}

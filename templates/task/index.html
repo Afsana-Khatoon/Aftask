@@ -1,0 +1,89 @@
+{% extends 'authentication/base.html' %}
+    
+  {% block content %}
+
+      <section class="fdb-block" >
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8 col-lg-7 col-xl-5 text-center">
+            <div class="fdb-box">
+              <div class="row">
+                <div class="col">
+                    <h2>Add Task</h2>
+                </div>
+              </div>
+                 {% if messages %}
+                    {% for message in messages %}
+                        <h3>{{ message }}</h3>
+                    {% endfor %}
+                  {% endif %}
+             <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+              {% load crispy_forms_tags %}
+                 {{ form|crispy }}
+              <div class="row mt-4">
+                <div class="col">
+                </div>
+              </div>
+              <div class="row mt-4">
+                <div class="col">
+                  <button class="btn btn-outline-secondary" type="submit">Submit</button>
+
+                </div>
+              </div>
+             </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="fdb-block">
+    <div class="col-12 col-md-8 col-lg-7 col-xl-5 text-center">
+        <h2>All Tasks</h2>
+    </div>
+      <div class="container">
+            {% for task in tasks %}
+          <div class="fdb-box">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3 col-xl-2 m-auto">
+              {% if task.task_pic %}
+              <img alt="image" class="img-fluid rounded-circle" src="{{ task.task_pic.url }}">
+              {% endif %}
+            </div>
+
+            <div class="col-12 col-md-8 ml-auto mr-auto mt-4 mt-md-0">
+              <p class="lead">
+                  {{ task.task_description }}
+              </p>
+
+              <p class="h3 mt-4 mt-lg-5"><strong>{{ task.uid }}</strong></p>
+              <p><em>{{ task.task_title }}</em></p>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+      </div>
+
+      <div class="row no-gutters my-5">
+        <div class="col text-center">
+          <div class="block-27">
+
+            {% if tasks.has_previous %}
+             <a  class="mr-2" href="?page=1">First</a>
+             <a  class="mr-2" href="?page={{ tasks.previous_page_number }}">Previous</a>
+              {% endif %}
+              <span  class="mr-2"> {{ tasks.number }}</span>
+              <span  class="mr-2">of</span>
+              <span  class="mr-2">{{ tasks.paginator.num_pages }}</span>
+
+          {% if tasks.has_next %}
+                <a  class="mr-2" href="?page={{ tasks.next_page_number }}">Next</a>
+                <a  class="mr-2" href="?page={{ tasks.paginator.num_pages }}">Last</a>
+              {% endif %}
+
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    {% endblock %}
